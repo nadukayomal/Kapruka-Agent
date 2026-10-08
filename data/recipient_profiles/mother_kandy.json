@@ -1,0 +1,19 @@
+{
+  "recipient_id": "mother_kandy",
+  "display_name": "Mother",
+  "relationship": "mother",
+  "district": "Kandy",
+  "city": "Kandy",
+  "allergies": ["nuts", "peanuts", "cashew", "almond"],
+  "nut_free": true,
+  "preferences": {
+    "likes": ["tea", "flowers", "saree", "home-cooked sweets without nuts"],
+    "dislikes": ["overly sugary cakes", "alcohol"],
+    "occasions": ["birthday", "Mother's Day", "Avurudu"]
+  },
+  "budget_lkr": {
+    "min": 2500,
+    "max": 15000
+  },
+  "notes": "Seed profile for Phase 3 semantic memory. Nut-free is a hard constraint."
+}

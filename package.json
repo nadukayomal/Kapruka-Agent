@@ -1,0 +1,15 @@
+{
+  "name": "kapruka-gift-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Kapruka Gift Concierge Agent — Next.js UI + Python backend orchestrator",
+  "scripts": {
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "dev:backend": "python scripts/run_backend.py",
+    "install:frontend": "npm --prefix frontend install"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}

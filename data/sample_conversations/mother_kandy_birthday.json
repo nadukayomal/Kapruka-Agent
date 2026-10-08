@@ -1,0 +1,10 @@
+{
+  "session_id": "sample-mother-kandy-001",
+  "recipient_id": "mother_kandy",
+  "turns": [
+    {
+      "role": "user",
+      "content": "I need a birthday gift for my mother in Kandy. She cannot have nuts."
+    }
+  ]
+}

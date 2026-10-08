@@ -1,0 +1,10 @@
+[
+  {
+    "id": "nut_free_kandy_mother",
+    "description": "Recommend a birthday gift for a nut-allergic mother in Kandy.",
+    "recipient_id": "mother_kandy",
+    "user_message": "Birthday gift for Amma in Kandy, definitely nut-free.",
+    "must_not_contain": ["cashew", "peanut", "almond", "nut mix"],
+    "must_consider_district": "Kandy"
+  }
+]

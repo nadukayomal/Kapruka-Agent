@@ -1,0 +1,55 @@
+# Secrets — never commit real credentials
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.log
+
+# Node / Next.js
+node_modules/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+.next/
+out/
+*.tsbuildinfo
+npm-debug.log*
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Runtime / data artifacts
+evaluation/results/*.json
+!evaluation/results/.gitkeep
+qdrant_storage/
+.playwright/
+playwright-report/
+test-results/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Local catalogs produced by crawls (keep the checked-in seed)
+data/catalog.raw.json

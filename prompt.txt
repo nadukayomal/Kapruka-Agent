@@ -1,0 +1,234 @@
+You are a senior AI Engineer. Your task is to develop a complete production-ready application called:
+
+**Kapruka Agent**
+
+You must follow the requirements and constraints strictly.
+
+==================================================
+1. PROJECT GOAL
+==================================================
+Build an intelligent Gift Concierge Agent for Kapruka.com (Sri Lankan e-commerce) that:
+- Remembers past preferences and allergies (especially nut-free)
+- Searches the live product catalog using RAG
+- Checks delivery feasibility in Sri Lankan districts
+- Uses a Reflection Loop (Draft → Critique → Revise) for safety
+- Has a modern Next.js frontend that shows “Thinking” and “Memory Recall”
+
+==================================================
+2. HARD CONSTRAINTS (MUST FOLLOW)
+==================================================
+- NO LangGraph, CrewAI, AutoGen, or any multi-agent framework
+- All API keys must be in .env only (never hardcode)
+- Strictly focused on Kapruka / Sri Lankan e-commerce domain
+- Use custom Python orchestration loop only
+
+==================================================
+3. REQUIRED FOLDER STRUCTURE
+==================================================
+Create this exact structure:
+
+kapruka-gift-agent/
+│
+├── .env
+├── .env.example
+├── .gitignore
+├── requirements.txt                  # Python backend dependencies
+├── package.json                      # Next.js frontend dependencies
+├── README.md
+│
+├── data/
+│   ├── catalog.json
+│   ├── recipient_profiles/
+│   │   ├── mother_kandy.json
+│   │   └── ...
+│   └── sample_conversations/
+│
+├── backend/                          # Python backend (Agent + Memory + Crawler)
+│   ├── src/
+│   │   ├── __init__.py
+│   │   │
+│   │   ├── crawler/                  # Part 1
+│   │   │   ├── __init__.py
+│   │   │   ├── scraper.py
+│   │   │   ├── pagination.py
+│   │   │   └── utils.py
+│   │   │
+│   │   ├── memory/                   # Part 2
+│   │   │   ├── __init__.py
+│   │   │   ├── short_term.py
+│   │   │   ├── long_term.py          # Qdrant RAG
+│   │   │   ├── semantic.py           # Recipient Profiles
+│   │   │   └── embeddings.py
+│   │   │
+│   │   ├── agents/                   # Part 3
+│   │   │   ├── __init__.py
+│   │   │   ├── router.py
+│   │   │   ├── catalog_specialist.py
+│   │   │   └── logistics_specialist.py
+│   │   │
+│   │   ├── reflection/               # Part 4
+│   │   │   ├── __init__.py
+│   │   │   ├── drafter.py
+│   │   │   ├── critic.py
+│   │   │   └── reviser.py
+│   │   │
+│   │   ├── core/
+│   │   │   ├── __init__.py
+│   │   │   ├── agent.py              # Main orchestration loop
+│   │   │   └── prompts.py
+│   │   │
+│   │   └── utils/                    # ← Updated as requested
+│   │       ├── __init__.py
+│   │       ├── config.py             # Config utils (loads .env, settings)
+│   │       ├── logger.py             # Logger utils
+│   │       ├── token.py              # Token utils (count / truncate)
+│   │       └── helpers.py            # General helper utils
+│   │
+│   ├── api/                          # FastAPI / Flask endpoints for Next.js
+│   │   ├── __init__.py
+│   │   ├── main.py
+│   │   └── routes/
+│   │       ├── chat.py
+│   │       └── memory.py
+│   │
+│   └── tests/
+│       ├── test_crawler.py
+│       ├── test_memory.py
+│       ├── test_router.py
+│       └── test_reflection.py
+│
+├── frontend/                         # ← Next.js Frontend (Bonus UI)
+│   ├── package.json
+│   ├── next.config.js
+│   ├── tsconfig.json
+│   ├── public/
+│   │   └── ...
+│   ├── src/
+│   │   ├── app/                      # App Router
+│   │   │   ├── layout.tsx
+│   │   │   ├── page.tsx              # Main Concierge chat page
+│   │   │   └── api/                  # (optional Next.js API routes)
+│   │   │
+│   │   ├── components/
+│   │   │   ├── ChatWindow.tsx
+│   │   │   ├── MessageBubble.tsx
+│   │   │   ├── ThinkingPanel.tsx     # Shows Reflection steps
+│   │   │   ├── MemoryRecall.tsx      # Shows Semantic Memory
+│   │   │   └── Sidebar.tsx
+│   │   │
+│   │   ├── lib/
+│   │   │   ├── api.ts                # Calls backend API
+│   │   │   └── types.ts
+│   │   │
+│   │   └── styles/
+│   │       └── globals.css
+│   │
+│   └── ...
+│
+├── notebooks/
+│   ├── 01_crawler_exploration.ipynb
+│   ├── 02_memory_test.ipynb
+│   ├── 03_reflection_loop.ipynb
+│   └── 04_end_to_end_demo.ipynb
+│
+├── evaluation/
+│   ├── scenarios.json
+│   ├── metrics.py
+│   └── results/
+│
+├── docs/
+│   ├── architecture.md
+│   └── Kapruka_Gift_Concierge_PreDevelopment_Proposal.pdf
+│
+└── scripts/
+    ├── run_crawler.py
+    ├── load_qdrant.py
+    └── run_backend.py
+
+==================================================
+4. DEVELOPMENT ORDER (Follow strictly)
+==================================================
+
+Phase 1: Project Setup
+- Create full folder structure
+- Create .env.example, requirements.txt, .gitignore, README.md
+- Implement utils: config.py, logger.py, token.py, helpers.py
+
+Phase 2: Playwright Crawler (Part 1)
+- Build robust headless crawler for kapruka.com
+- Extract: Product Name, Price, Description, Availability, Category, URL
+- Handle pagination and dynamic loading
+- Output clean catalog.json
+
+Phase 3: Cognitive Memory (Part 2)
+- Short-Term Memory (session buffer)
+- Long-Term Memory (Qdrant + RAG on catalog.json)
+- Semantic Memory (Recipient Profiles as JSON)
+
+Phase 4: Specialist Orchestration (Part 3)
+- Intent Router
+- Catalog Specialist (RAG search)
+- Logistics Specialist (Sri Lankan district delivery check)
+
+Phase 5: Reflection Loop (Part 4)
+- Draft → Critique (against allergies/preferences) → Revise
+- Must block unsafe recommendations
+
+Phase 6: Core Agent
+- Custom Python control loop that connects everything
+- No external agent frameworks
+
+Phase 7: Backend API
+- FastAPI endpoints so Next.js can communicate with the agent
+
+Phase 8: Next.js Frontend (Bonus)
+- Clean modern UI
+- Chat interface
+- “Thinking” panel (show Reflection steps)
+- “Memory Recall” panel (show Semantic Memory)
+
+Phase 9: Evaluation & Metrics
+- Crawl success rate
+- Preference Alignment rate
+- Latency tracking
+
+==================================================
+5. TECHNICAL PREFERENCES
+==================================================
+- Backend: Python 3.11+
+- Frontend: Next.js 14+ (App Router) + TypeScript + Tailwind
+- Vector DB: Qdrant
+- LLM: OpenAI (or compatible)
+- Crawler: Playwright
+- API: FastAPI
+- Logging: Structured logging
+- Config: pydantic-settings or python-dotenv
+
+==================================================
+6. CODING RULES
+==================================================
+- Write clean, modular, well-documented code
+- Use OOP Standards.
+- In each file explain what is happennig in this file mention on top of the file
+- Use Docstring explainnig Args, Return, and explanation each function.
+- Every module must be independently testable
+- Use type hints
+- Add proper error handling and logging
+- Keep prompts in backend/src/core/prompts.py
+- Never hardcode secrets
+- Prefer simple and readable code over clever code
+
+==================================================
+7. CURRENT TASK
+==================================================
+Start with **Phase 1: Project Setup**.
+
+1. Create the complete folder structure
+2. Generate all necessary base files
+3. Implement the four utils files properly:
+   - config.py
+   - logger.py
+   - token.py
+   - helpers.py
+
+After finishing Phase 1, stop and wait for my confirmation before moving to Phase 2.
